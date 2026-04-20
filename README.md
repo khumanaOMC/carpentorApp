@@ -48,3 +48,28 @@ API base:
 ## Important note
 
 Current frontend uses modern Next.js, so Node `18.18+` ya preferably `20 LTS` required hai.
+
+## Vercel deploy
+
+Project ko single Vercel app ki tarah deploy karne ke liye:
+
+- frontend normal Next.js app ki tarah deploy hoga
+- Express backend `api/[...path].js` ke through Vercel serverless function me chalega
+- production me frontend default se same-origin `/api/v1` use karega
+
+Required environment variables on Vercel:
+
+```bash
+MONGODB_URI=your-mongodb-connection-string
+JWT_ACCESS_SECRET=your-access-secret
+JWT_REFRESH_SECRET=your-refresh-secret
+CORS_ORIGIN=https://your-vercel-domain.vercel.app
+```
+
+Optional:
+
+```bash
+NEXT_PUBLIC_API_URL=https://your-vercel-domain.vercel.app/api/v1
+```
+
+Local development me `NEXT_PUBLIC_API_URL` ke bina app abhi bhi `http://localhost:4000/api/v1` use karegi.
