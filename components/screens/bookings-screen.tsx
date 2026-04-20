@@ -201,15 +201,16 @@ export function BookingsScreen() {
 
   useEffect(() => {
     const threadId = chatThread?.id;
-    if (!chatOpen || !threadId) {
+    if (!chatOpen || typeof threadId !== "string") {
       return;
     }
+    const stableThreadId = threadId;
 
     let active = true;
 
     async function refreshChat() {
       try {
-        const response = await getChatThread(threadId);
+        const response = await getChatThread(stableThreadId);
         if (active) {
           setChatThread(response.item);
         }
