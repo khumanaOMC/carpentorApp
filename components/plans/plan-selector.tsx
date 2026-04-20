@@ -21,6 +21,7 @@ const planVisuals = {
     titleColor: "#8f8794",
     accent: "#9c93a4",
     border: "rgba(131, 123, 143, 0.30)",
+    glow: "rgba(156, 147, 164, 0.16)",
     buttonBg: "linear-gradient(180deg, rgba(55,48,61,0.92), rgba(39,34,45,0.98))",
     buttonText: "rgba(236,229,241,0.52)",
     buttonBorder: "rgba(154, 143, 166, 0.14)"
@@ -38,6 +39,7 @@ const planVisuals = {
     titleColor: "#88ecaf",
     accent: "#9df5bc",
     border: "rgba(125, 221, 168, 0.26)",
+    glow: "rgba(125, 221, 168, 0.22)",
     buttonBg: "linear-gradient(90deg, #74efc0 0%, #ffe16a 100%)",
     buttonText: "#132017",
     buttonBorder: "transparent"
