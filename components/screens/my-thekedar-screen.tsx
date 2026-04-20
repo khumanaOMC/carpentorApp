@@ -219,7 +219,8 @@ export function MyThekedarScreen() {
   }
 
   useEffect(() => {
-    if (!chatOpen || !chatThread?.id) {
+    const threadId = chatThread?.id;
+    if (!chatOpen || !threadId) {
       return;
     }
 
@@ -227,7 +228,7 @@ export function MyThekedarScreen() {
 
     async function refreshChat() {
       try {
-        const response = await getChatThread(chatThread.id);
+        const response = await getChatThread(threadId);
         if (active) {
           setChatThread(response.item);
         }
