@@ -73,3 +73,7 @@ NEXT_PUBLIC_API_URL=https://your-vercel-domain.vercel.app/api/v1
 ```
 
 Local development me `NEXT_PUBLIC_API_URL` ke bina app abhi bhi `http://localhost:4000/api/v1` use karegi.
+
+Latest deployment note:
+
+- Root app is intended to be deployed as a single Vercel project.
