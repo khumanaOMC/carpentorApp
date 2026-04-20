@@ -1,0 +1,13 @@
+.DS_Store
+.next
+node_modules
+*.log
+tsconfig.tsbuildinfo
+
+.env
+.env.local
+.env.*.local
+backend/.env
+
+dist
+build
