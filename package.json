@@ -26,9 +26,9 @@
     "jsonwebtoken": "9.0.2",
     "mongoose": "8.9.5",
     "morgan": "1.10.0",
-    "next": "15.2.4",
-    "react": "19.0.0",
-    "react-dom": "19.0.0"
+    "next": "15.2.8",
+    "react": "19.0.1",
+    "react-dom": "19.0.1"
   },
   "devDependencies": {
     "@types/node": "22.10.1",
