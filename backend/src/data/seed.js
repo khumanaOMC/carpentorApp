@@ -258,6 +258,18 @@ async function ensureReview(seed) {
 }
 
 async function ensureSeedData() {
+  const demoCarpenterCount = Number(process.env.DEMO_CARPENTER_COUNT || 20);
+  const demoContractorCount = Number(process.env.DEMO_CONTRACTOR_COUNT || 5);
+  const demoCustomerCount = Number(process.env.DEMO_CUSTOMER_COUNT || 3);
+  const [existingCarpenters, existingJobs] = await Promise.all([
+    CarpenterProfile.estimatedDocumentCount(),
+    Job.estimatedDocumentCount()
+  ]);
+
+  if (existingCarpenters >= demoCarpenterCount && existingJobs >= demoContractorCount * 2) {
+    return;
+  }
+
   const adminHash = await bcrypt.hash(ADMIN_PASSWORD, 10);
   const demoHash = await bcrypt.hash(DEMO_PASSWORD, 10);
 
@@ -275,9 +287,9 @@ async function ensureSeedData() {
     adminHash
   );
 
-  const contractorSeeds = Array.from({ length: 10 }, (_, index) => contractorSeed(index + 1));
-  const carpenterSeeds = Array.from({ length: 100 }, (_, index) => carpenterSeed(index + 1));
-  const customerSeeds = Array.from({ length: 6 }, (_, index) => customerSeed(index + 1));
+  const contractorSeeds = Array.from({ length: demoContractorCount }, (_, index) => contractorSeed(index + 1));
+  const carpenterSeeds = Array.from({ length: demoCarpenterCount }, (_, index) => carpenterSeed(index + 1));
+  const customerSeeds = Array.from({ length: demoCustomerCount }, (_, index) => customerSeed(index + 1));
 
   const contractorUsers = [];
   const carpenterUsers = [];
