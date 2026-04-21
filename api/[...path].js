@@ -16,6 +16,14 @@ async function ensureBootstrap() {
 }
 
 module.exports = async function handler(req, res) {
-  await ensureBootstrap();
-  return app(req, res);
+  try {
+    await ensureBootstrap();
+    return app(req, res);
+  } catch (error) {
+    console.error("API bootstrap failed", error);
+    return res.status(500).json({
+      ok: false,
+      message: error instanceof Error ? error.message : "API bootstrap failed"
+    });
+  }
 };
