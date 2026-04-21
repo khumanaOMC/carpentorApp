@@ -44,6 +44,7 @@ export function MyThekedarScreen() {
   const [chatThread, setChatThread] = useState<ChatThread | null>(null);
   const [chatDraft, setChatDraft] = useState("");
   const [chatLoading, setChatLoading] = useState(false);
+  const chatThreadId = chatThread?.id ?? "";
 
   function ensureConnectAccess(actionLabel: string) {
     const gate = getConnectAccessState(authUser, "/my-thekedar");
@@ -219,17 +220,15 @@ export function MyThekedarScreen() {
   }
 
   useEffect(() => {
-    const threadId = chatThread?.id;
-    if (!chatOpen || typeof threadId !== "string") {
+    if (!chatOpen || !chatThreadId) {
       return;
     }
-    const stableThreadId = threadId;
 
     let active = true;
 
     async function refreshChat() {
       try {
-        const response = await getChatThread(stableThreadId);
+        const response = await getChatThread(chatThreadId);
         if (active) {
           setChatThread(response.item);
         }
@@ -243,7 +242,7 @@ export function MyThekedarScreen() {
       active = false;
       window.clearInterval(intervalId);
     };
-  }, [chatOpen, chatThread?.id]);
+  }, [chatOpen, chatThreadId]);
 
   return (
     <MobileShell title="My Thekedar" subtitle={authUser?.role === "carpenter" ? "Yahan thekedar ke offers compare karke choose karo" : "Aapke connected contractor / thekedaar"}>

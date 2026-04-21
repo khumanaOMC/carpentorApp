@@ -61,6 +61,7 @@ export function MyKarigarScreen() {
   const [chatThread, setChatThread] = useState<ChatThread | null>(null);
   const [chatDraft, setChatDraft] = useState("");
   const [chatLoading, setChatLoading] = useState(false);
+  const chatThreadId = chatThread?.id ?? "";
 
   function ensureConnectAccess(actionLabel: string) {
     const gate = getConnectAccessState(authUser, "/my-karigar");
@@ -223,17 +224,15 @@ export function MyKarigarScreen() {
   }
 
   useEffect(() => {
-    const threadId = chatThread?.id;
-    if (!chatOpen || typeof threadId !== "string") {
+    if (!chatOpen || !chatThreadId) {
       return;
     }
-    const stableThreadId = threadId;
 
     let active = true;
 
     async function refreshChat() {
       try {
-        const response = await getChatThread(stableThreadId);
+        const response = await getChatThread(chatThreadId);
         if (active) {
           setChatThread(response.item);
         }
@@ -247,7 +246,7 @@ export function MyKarigarScreen() {
       active = false;
       window.clearInterval(intervalId);
     };
-  }, [chatOpen, chatThread?.id]);
+  }, [chatOpen, chatThreadId]);
 
   return (
     <MobileShell title="My Karigar" subtitle={authUser?.role === "carpenter" ? "Aapki saved hajri aur earning summary" : "Booked aur connected carpenters / workers"}>
