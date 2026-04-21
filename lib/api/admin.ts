@@ -7,7 +7,8 @@ const API_BASE =
 type QueryValue = string | undefined;
 
 function buildUrl(path: string, query?: Record<string, QueryValue>) {
-  const url = new URL(`${API_BASE}${path}`);
+  const origin = typeof window !== "undefined" ? window.location.origin : "http://localhost:3000";
+  const url = new URL(`${API_BASE}${path}`, origin);
   if (query) {
     Object.entries(query).forEach(([key, value]) => {
       if (value) {

@@ -15,6 +15,19 @@ function authHeaders() {
   return headers;
 }
 
+function buildUrl(path: string, query?: Record<string, string | undefined>) {
+  const origin = typeof window !== "undefined" ? window.location.origin : "http://localhost:3000";
+  const url = new URL(`${API_BASE}${path}`, origin);
+
+  Object.entries(query || {}).forEach(([key, value]) => {
+    if (value) {
+      url.searchParams.set(key, value);
+    }
+  });
+
+  return url.toString();
+}
+
 async function request<T>(path: string, init?: RequestInit) {
   const response = await fetch(`${API_BASE}${path}`, {
     ...init,
@@ -136,14 +149,7 @@ export type ContractorDirectoryItem = {
 };
 
 export function getCarpenters(query?: { search?: string; city?: string; pincode?: string; availabilityStatus?: string }) {
-  const url = new URL(`${API_BASE}/carpenters`);
-  Object.entries(query || {}).forEach(([key, value]) => {
-    if (value) {
-      url.searchParams.set(key, value);
-    }
-  });
-
-  return fetch(url.toString(), { cache: "no-store" })
+  return fetch(buildUrl("/carpenters", query), { cache: "no-store" })
     .then(async (response) => {
       const data = await response.json().catch(() => ({}));
       if (!response.ok) {
@@ -154,14 +160,7 @@ export function getCarpenters(query?: { search?: string; city?: string; pincode?
 }
 
 export function getContractors(query?: { search?: string; city?: string }) {
-  const url = new URL(`${API_BASE}/contractors`);
-  Object.entries(query || {}).forEach(([key, value]) => {
-    if (value) {
-      url.searchParams.set(key, value);
-    }
-  });
-
-  return fetch(url.toString(), { cache: "no-store" })
+  return fetch(buildUrl("/contractors", query), { cache: "no-store" })
     .then(async (response) => {
       const data = await response.json().catch(() => ({}));
       if (!response.ok) {
